@@ -1,5 +1,6 @@
-# Eye OpenScad, SVG
+# Some icons (OpenScad, SVG)
 
-You can use it to for any purpose, for example to make eye icons.
+You can use it to for any purpose.
 
-![Stylized eye](eye.png)
+![Eye icon](eye/eye.png)
+![Unzip icon](unzip/unzip.png)
