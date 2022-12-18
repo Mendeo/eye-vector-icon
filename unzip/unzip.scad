@@ -20,7 +20,8 @@ SOFTWARE.
 
 iconWidth = 40;
 squareHeight = 20;
-iconThickness = 3;
+iconThickness = 4;
+arrowThickness = 6;
 
 PHI = (sqrt(5) + 1) / 2;
 
@@ -34,19 +35,19 @@ translate([iconWidth / 2 - iconThickness, 0])
 square([iconThickness, squareHeight]);
 
 translate([0, squareHeight / PHI])
-arrow();
+arrow(arrowThickness);
 
-module arrow()
+module arrow(width)
 {
 	hArrowStand = squareHeight / PHI;
-	translate([-iconThickness, 0])
-	square([iconThickness * 2, hArrowStand]);
+	translate([-arrowThickness / 2, 0])
+	square([arrowThickness, hArrowStand]);
 
 	translate([0, hArrowStand])
-	triangle(iconThickness * 4);
+	triangle(arrowThickness * 3.5);
 }
 
 module triangle(width)
 {
-	polygon([[-width / 2, 0], [width / 2, 0], [0, sqrt(3) * width / 2]]);
+	polygon([[-width / 2, 0], [width / 2, 0], [0, width * sqrt(3) / 2]]);
 }
