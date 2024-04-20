@@ -22,43 +22,35 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-$fn = 100;
-
-eyeWidth = 40;
-eyeHeight = 20;
-eyeThickness = 1;
-
 PHI = (sqrt(5) + 1) / 2;
+t = 10;
+rectL = 100;
+rectW = rectL / PHI;
+cursorH = rectW * PHI;
+cursorW = cursorH / 2;
 
-translate([0, -eyeHeight / 2])
-parabola(eyeHeight / 2, eyeWidth, eyeThickness);
-translate([0, eyeHeight / 2])
-mirror([0, 1])
-parabola(eyeHeight/ 2, eyeWidth, eyeThickness);
 
 
-circle(d = eyeHeight / PHI);
 
-difference()
+rect(t, rectW, rectL);
+translate([(rectL / PHI) - t / 2, (rectW - cursorH) / 2])
+cursor(t, cursorH, cursorW);
+
+module rect(t, w, l)
 {
-	circle(d = eyeHeight);
-	circle(d = eyeHeight - 2 * eyeThickness);
+	square([t, w]);
+	square([l, t]);
+	translate([l - t, 0])
+	square([t, w]);
+	translate([0, w - t])
+	square([l, t]);
 }
 
-
-module parabola(h, w, t)
+module cursor(t, h, w)
 {
-	k = 4 * h / (w * w);
-	wExtra = sqrt((h + t) / k); //На какую ширину нужно сделать параболу, чтобы высота увеличилась на t.
-	dx = wExtra * 2 / $fn;
-	points = [for (i = [0 : $fn]) let(x = -wExtra + i * dx, y = k * x * x) [x, y]];
-
-	difference()
-	{
-		polygon(points);
-		offset(delta = -1)
-		polygon(points);
-		translate([-wExtra, h])
-		square([2 * wExtra, t + 1]);
-	}
+	square([t, h]);
+	translate([(t - w) / 2, 0])
+	square([w, t]);
+	translate([(t - w) / 2, h - t])
+	square([w, t]);
 }

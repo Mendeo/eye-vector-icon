@@ -22,43 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-$fn = 100;
-
-eyeWidth = 40;
-eyeHeight = 20;
-eyeThickness = 1;
-
-PHI = (sqrt(5) + 1) / 2;
-
-translate([0, -eyeHeight / 2])
-parabola(eyeHeight / 2, eyeWidth, eyeThickness);
-translate([0, eyeHeight / 2])
-mirror([0, 1])
-parabola(eyeHeight/ 2, eyeWidth, eyeThickness);
-
-
-circle(d = eyeHeight / PHI);
+$fn=50;
+nRays = 8;
+size = 50;
+sunR = size;
 
 difference()
 {
-	circle(d = eyeHeight);
-	circle(d = eyeHeight - 2 * eyeThickness);
-}
-
-
-module parabola(h, w, t)
-{
-	k = 4 * h / (w * w);
-	wExtra = sqrt((h + t) / k); //На какую ширину нужно сделать параболу, чтобы высота увеличилась на t.
-	dx = wExtra * 2 / $fn;
-	points = [for (i = [0 : $fn]) let(x = -wExtra + i * dx, y = k * x * x) [x, y]];
-
-	difference()
-	{
-		polygon(points);
-		offset(delta = -1)
-		polygon(points);
-		translate([-wExtra, h])
-		square([2 * wExtra, t + 1]);
-	}
+	circle(r = sunR);
+	translate([sunR * (sqrt(5) - 1) * 0.5, 0, 0])
+	circle(r = sunR);
 }
